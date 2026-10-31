@@ -12,10 +12,10 @@ Estas fuentes sirven para orientar y deben revisarse por una persona responsable
 
 ## Regla de uso
 
-Resguarda no concluye que una conducta sea delito ni interpreta artículos legales. Cuando una pregunta requiera una conclusión jurídica, debe orientar a consultar una institución o persona profesional y mostrar la fuente correspondiente.
+Xigaia no concluye que una conducta sea delito ni interpreta artículos legales. Cuando una pregunta requiera una conclusión jurídica, debe orientar a consultar una institución o persona profesional y mostrar la fuente correspondiente.
 
 ## Mantenimiento
 
 Antes de una nueva demostración o despliegue, verificar que los enlaces, teléfonos, leyes y rutas de atención continúen vigentes. Registrar fecha, responsable y URL de cada revisión.
 
-La Secretaría de las Mujeres de Oaxaca publica el teléfono 951 454 0508. Su sitio muestra códigos postales distintos en diferentes secciones; por eso Resguarda no muestra una dirección y pide confirmar antes de acudir.
+La Secretaría de las Mujeres de Oaxaca publica el teléfono 951 454 0508. Su sitio muestra códigos postales distintos en diferentes secciones; por eso Xigaia no muestra una dirección y pide confirmar antes de acudir.

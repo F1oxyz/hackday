@@ -1,10 +1,10 @@
-# 🛡️ Resguarda
+# 🛡️ Xigaia
 
 **Navegador local de evidencia digital para situaciones de violencia digital.**
 
-Resguarda transforma un incidente breve en un plan de resguardo verificable: clasifica el contexto con Gemma ejecutado localmente, muestra una checklist basada en fuentes locales, registra archivos con SHA-256 y exporta un expediente portable.
+Xigaia transforma un incidente breve en un plan de resguardo verificable: clasifica el contexto con Gemma ejecutado localmente, muestra una checklist basada en fuentes locales, registra archivos con SHA-256 y exporta un expediente portable.
 
-> Resguarda no presenta denuncias, no determina delitos y no sustituye servicios de emergencia, acompañamiento especializado ni asesoría legal.
+> Xigaia no presenta denuncias, no determina delitos y no sustituye servicios de emergencia, acompañamiento especializado ni asesoría legal.
 
 ## Demo rápida
 
@@ -25,21 +25,21 @@ Abre `http://localhost:8000`. Para la demostración usa únicamente historias y 
 
 1. Selecciona el tipo de incidente: amenazas, contenido íntimo, sextorsión, suplantación o cuenta comprometida.
 2. Responde preguntas de triage sin datos identificables.
-3. Gemma genera un resumen local y Resguarda lo valida; la app compone el plan de seguridad y evidencia con reglas deterministas.
+3. Gemma genera un resumen local y Xigaia lo valida; la app compone el plan de seguridad y evidencia con reglas deterministas.
 4. Registra evidencias locales: archivo, fecha y SHA-256.
-5. Descarga `expediente-resguarda.zip` con PDF, manifiesto JSON, evidencias y fuentes.
+5. Descarga `expediente-xigaia.zip` con PDF, manifiesto JSON, evidencias y fuentes.
 
 ## Qué demuestra la IA
 
-Gemma es una parte importante, pero delimitada: convierte el contexto opcional en un resumen breve y estructurado que Resguarda valida antes de usar. Las acciones sensibles (emergencia, privacidad, checklist y fuentes) se controlan mediante lógica verificable de la aplicación, no con texto libre del modelo.
+Gemma es una parte importante, pero delimitada: convierte el contexto opcional en un resumen breve y estructurado que Xigaia valida antes de usar. Las acciones sensibles (emergencia, privacidad, checklist y fuentes) se controlan mediante lógica verificable de la aplicación, no con texto libre del modelo.
 
 Esto evita usar un modelo pequeño como autoridad legal y convierte la inferencia local en un **harness de seguridad reutilizable**.
 
 ## Contenido del expediente
 
 ```text
-expediente-resguarda.zip
-├── expediente-resguarda.pdf
+expediente-xigaia.zip
+├── expediente-xigaia.pdf
 ├── manifest.json
 ├── fuentes.md
 └── evidencias/
@@ -61,13 +61,13 @@ Interfaz local ──▶ FastAPI ──▶ Ollama + Gemma (localhost)
 | `POST /api/plan` | Triage y plan de resguardo validado |
 | `POST /api/evidence` | Registra archivo y calcula SHA-256 |
 | `POST /api/export` | Exporta ZIP portable |
-| `POST /api/delete-all` | Borra archivos creados por Resguarda |
+| `POST /api/delete-all` | Borra archivos creados por Xigaia |
 
 ## Fuentes y límites
 
 - Las fuentes locales están en [`documents/`](documents/) y se mantienen según [`DOCUMENTOS.md`](DOCUMENTOS.md).
 - Antes de cualquier uso fuera del demo, una persona responsable debe verificar vigencia, enlaces, rutas de atención y contenido jurídico.
-- La descarga inicial del modelo requiere internet. Después de descargarse, Gemma y Resguarda operan localmente.
+- La descarga inicial del modelo requiere internet. Después de descargarse, Gemma y Xigaia operan localmente.
 - Para un dispositivo con capacidad suficiente, se recomienda una variante Gemma instruccional más grande que el modelo de 270M usado para la demo.
 
 ## Modelo y licencia

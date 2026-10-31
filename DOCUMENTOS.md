@@ -1,6 +1,6 @@
 # Documentos de conocimiento
 
-Resguarda consulta Markdown local dentro de `documents/`; no descarga fuentes durante una conversación.
+Xigaia consulta Markdown local dentro de `documents/`; no descarga fuentes durante una conversación.
 
 ## Uso rápido
 

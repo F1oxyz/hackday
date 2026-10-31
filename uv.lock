@@ -414,7 +414,7 @@ wheels = [
 ]
 
 [[package]]
-name = "resguarda"
+name = "xigaia"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

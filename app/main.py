@@ -22,12 +22,12 @@ REPORTS_DIR = ROOT / "data" / "reports"
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/chat")
 MODEL_NAME = os.getenv("MODEL_NAME", "gemma3:1b")
 
-app = FastAPI(title="Resguarda", docs_url=None, redoc_url=None)
+app = FastAPI(title="Xigaia", docs_url=None, redoc_url=None)
 
 SOURCES = {
     "evidence": {
         "title": "Guía local para conservar evidencia",
-        "publisher": "Resguarda · fuentes oficiales revisadas",
+        "publisher": "Xigaia · fuentes oficiales revisadas",
         "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LGAMVLV.pdf",
     },
     "support": {
@@ -102,7 +102,7 @@ def retrieve(query: str, limit: int = 3) -> list[dict[str, str]]:
 
 def ollama_answer(message: str, sources: list[dict[str, str]]) -> str:
     context = "\n\n".join(f"[{item['name']}]\n{item['text']}" for item in sources)
-    system = """Eres Resguarda, una asistente privada que funciona localmente. Responde en español mexicano, con empatía y brevedad. Usa SOLO las fuentes locales proporcionadas. No determines delitos ni des asesoría legal. Si la fuente no basta, dilo claramente. NUNCA solicites, sugieras recopilar ni repitas nombres, fechas de nacimiento, contraseñas, ubicación, historial de navegación, teléfonos u otros datos personales. No inventes evidencia que no exista en las fuentes. Da únicamente acciones de protección y conservación de evidencia. Escribe texto plano, sin Markdown, con tres secciones: Orientación inmediata, Evidencia a conservar y Siguiente paso. Si hay riesgo inmediato, recomienda contactar servicios de emergencia locales o una red de apoyo."""
+    system = """Eres Xigaia, una asistente privada que funciona localmente. Responde en español mexicano, con empatía y brevedad. Usa SOLO las fuentes locales proporcionadas. No determines delitos ni des asesoría legal. Si la fuente no basta, dilo claramente. NUNCA solicites, sugieras recopilar ni repitas nombres, fechas de nacimiento, contraseñas, ubicación, historial de navegación, teléfonos u otros datos personales. No inventes evidencia que no exista en las fuentes. Da únicamente acciones de protección y conservación de evidencia. Escribe texto plano, sin Markdown, con tres secciones: Orientación inmediata, Evidencia a conservar y Siguiente paso. Si hay riesgo inmediato, recomienda contactar servicios de emergencia locales o una red de apoyo."""
     payload = json.dumps({
         "model": MODEL_NAME,
         "stream": False,
@@ -191,7 +191,7 @@ def build_plan(incident: str, immediate_risk: bool, evidence_available: bool, ac
         steps.append("Protege la cuenta: cambia contraseña desde un dispositivo confiable y revisa sesiones abiertas.")
     handoff = extraction["summary"] if extraction else (
         f"La persona solicita orientación inicial sobre {definition['label'].lower()}. "
-        "Resguarda recomienda conservar evidencia y buscar acompañamiento cuando se sienta lista."
+        "Xigaia recomienda conservar evidencia y buscar acompañamiento cuando se sienta lista."
     )
     support_routes = []
     if immediate_risk:
@@ -220,7 +220,7 @@ def build_plan(incident: str, immediate_risk: bool, evidence_available: bool, ac
         "sources": [SOURCES[source] for source in definition["sources"]],
         "handoff": handoff,
         "incident_map": extraction or {"platform": "No especificada", "needs_account_protection": account_compromised},
-        "model_status": "Gemma local organizó el relato y Resguarda validó la salida" if extraction else "Plan seguro generado con reglas locales; Gemma no añadió datos",
+        "model_status": "Gemma local organizó el relato y Xigaia validó la salida" if extraction else "Plan seguro generado con reglas locales; Gemma no añadió datos",
         "support_routes": support_routes,
     }
 
@@ -253,7 +253,7 @@ def escape_pdf(text: str) -> str:
 
 
 def create_pdf(summary: str, plan: dict[str, object] | None = None) -> Path:
-    lines = ["RESGUARDA — EXPEDIENTE ORIENTATIVO", "", "Este documento no es una denuncia ni asesoría legal.", "", "Relato:"]
+    lines = ["XIGAIA — EXPEDIENTE ORIENTATIVO", "", "Este documento no es una denuncia ni asesoría legal.", "", "Relato:"]
     lines.extend(textwrap.wrap(summary, width=82) or ["Sin relato registrado."])
     if plan:
         lines.extend(["", "Resumen para pedir ayuda:"])
@@ -299,7 +299,7 @@ def create_pdf(summary: str, plan: dict[str, object] | None = None) -> Path:
     startxref = len(pdf.encode("latin-1"))
     pdf += f"xref\n0 {len(objects) + 1}\n0000000000 65535 f \n" + "".join(f"{offset:010d} 00000 n \n" for offset in offsets[1:])
     pdf += f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{startxref}\n%%EOF"
-    report = REPORTS_DIR / "expediente-resguarda.pdf"
+    report = REPORTS_DIR / "expediente-xigaia.pdf"
     report.write_bytes(pdf.encode("latin-1"))
     return report
 
@@ -312,7 +312,7 @@ def create_bundle(summary: str, plan: dict[str, object]) -> Path:
         "plan": plan,
         "evidence": evidence_manifest(),
     }
-    bundle = REPORTS_DIR / "expediente-resguarda.zip"
+    bundle = REPORTS_DIR / "expediente-xigaia.zip"
     with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as archive:
         archive.write(report, report.name)
         archive.writestr("manifest.json", json.dumps(manifest, ensure_ascii=False, indent=2))
@@ -389,7 +389,7 @@ async def add_evidence(
 
 @app.post("/api/report")
 def report(body: dict[str, str]) -> FileResponse:
-    return FileResponse(create_pdf(body.get("summary", "")).resolve(), media_type="application/pdf", filename="expediente-resguarda.pdf")
+    return FileResponse(create_pdf(body.get("summary", "")).resolve(), media_type="application/pdf", filename="expediente-xigaia.pdf")
 
 
 @app.post("/api/export")
@@ -398,7 +398,7 @@ def export_bundle(body: dict[str, object]) -> FileResponse:
     if not isinstance(plan_data, dict):
         raise HTTPException(400, "El plan de resguardo no es válido.")
     bundle = create_bundle(str(body.get("summary", "")), plan_data)
-    return FileResponse(bundle.resolve(), media_type="application/zip", filename="expediente-resguarda.zip")
+    return FileResponse(bundle.resolve(), media_type="application/zip", filename="expediente-xigaia.zip")
 
 
 @app.post("/api/delete-all")

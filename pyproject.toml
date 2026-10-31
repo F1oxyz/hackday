@@ -1,5 +1,5 @@
 [project]
-name = "resguarda"
+name = "xigaia"
 version = "0.1.0"
 description = "Offline local guidance assistant for digital violence"
 requires-python = ">=3.11"
